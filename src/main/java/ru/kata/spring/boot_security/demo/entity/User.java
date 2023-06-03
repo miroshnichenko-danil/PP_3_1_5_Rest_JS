@@ -2,15 +2,12 @@ package ru.kata.spring.boot_security.demo.entity;
 
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "security_users")
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,10 +34,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String surname, String email, int age, Set<Role> roles) {
+    public User(String name, String surname, String email, int age, Set<Role> roles, String password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.password = password;
         this.age = age;
         this.roles = roles;
     }
@@ -85,6 +83,10 @@ public class User implements UserDetails {
         this.age = age;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -95,40 +97,5 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

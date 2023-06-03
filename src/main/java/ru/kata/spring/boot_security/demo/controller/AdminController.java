@@ -1,6 +1,9 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.slf4j.helpers.CheckReturnValue;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,8 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,10 +38,16 @@ public class AdminController {
     }
 
     @PostMapping("/")
-    public String addUser(@ModelAttribute("user") User user) {
-
+    public String addUser(@ModelAttribute("user") User user
+            , @RequestParam(defaultValue = "false") boolean checkbox) {
+        Set<Role> roles = new HashSet<>();
+        if (checkbox) {
+            roles.add(new Role(1L, "ROLE_ADMIN"));
+        }
+        roles.add(new Role(2L, "ROLE_USER"));
+        user.setRoles(roles);
         service.addUser(user);
-        return "redirect:/admin";
+        return "redirect:/admin/";
     }
 
     @GetMapping("/{id}/edit")
@@ -46,15 +57,23 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        service.editUser(user);
-        return "redirect:/admin";
+    public String updateUser(@ModelAttribute("user") User user
+            , @RequestParam(value = "new_pass") String newPass
+            , @RequestParam(defaultValue = "false") boolean checkbox) {
+        Set<Role> roles = new HashSet<>();
+        if (checkbox) {
+            roles.add(new Role(1L, "ROLE_ADMIN"));
+        }
+        roles.add(new Role(2L, "ROLE_USER"));
+        user.setRoles(roles);
+        service.editUser(user, newPass);
+        return "redirect:/admin/";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         service.deleteUserById(id);
-        return "redirect:/admin";
+        return "redirect:/admin/";
     }
 
 }

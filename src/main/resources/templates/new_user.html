@@ -13,7 +13,10 @@
 <body>
 <h2>Add New User </h2>
 <br>
-<form th:method = "POST" th:action = "@{/admin}" th:object = "${user}">
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="logout"/>
+</form>
+<form th:method = "POST" th:action = "@{/admin/}" th:object = "${user}">
     <label for="name">Name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
@@ -27,7 +30,10 @@
     <input type="text" th:field="*{email}" id="email"/>
     <br/>
     <label for="name">Password: </label>
-    <input type="text" th:field="*{password}" id="password"/>
+    <input type="password" th:field="*{password}" id="password"/>
+    <br/>
+    <input type="checkbox" name="checkbox">
+    <label for="name">Admin </label>
     <br/>
     <input type="submit" value="Add New User"/>
 </form>

@@ -12,22 +12,28 @@
 <body>
 <h2>Edit User </h2>
 <br>
-<form th:method="PATCH" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="logout"/>
+</form>
+<br/>
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="name">Name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
-    <label for="name">Surname: </label>
+    <label for="surname">Surname: </label>
     <input type="text" th:field="*{surname}" id="surname"/>
     <br/>
-    <label for="name">Age: </label>
+    <label for="age">Age: </label>
     <input type="text" th:field="*{age}" id="age"/>
     <br/>
-    <label for="name">Email (this will be your login): </label>
+    <label for="email">Email (this will be your login): </label>
     <input type="text" th:field="*{email}" id="email"/>
     <br/>
-    <label for="name">Password: </label>
-    <input type="text" th:field="*{password}" id="password"/>
+    <label for="new_pass">Change password: </label>
+    <input type="password" name="new_pass" id="new_pass"/>
     <br/>
+    <input type="checkbox" name="checkbox">
+    <label for="name">Admin </label>
     <br/>
     <input type="submit" value="Edit User"/>
 </form>

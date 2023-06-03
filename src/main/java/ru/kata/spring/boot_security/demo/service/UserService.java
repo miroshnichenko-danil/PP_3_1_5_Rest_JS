@@ -14,6 +14,7 @@ public interface UserService {
 
     void addUser(User user);
 
-    void editUser(User user);
+    void editUser(User user, String newPass);
     User getUserById(long id);
+    User getUserByEmail(String email);
 }

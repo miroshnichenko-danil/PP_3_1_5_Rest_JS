@@ -15,25 +15,16 @@
 <h2>User info</h2>
 <br>
 <form th:method="POST" th:action="@{/logout}" th:object="${user}">
-    <label for="name">Name: </label>
-    <output th:type="text" th:field="*{name}" id="name"></output>
-    <br/>
-    <label for="name">Surname: </label>
-    <output th:type="text" th:field="*{surname}" id="surname"></output>
-    <br/>
-    <label for="name">Email: </label>
-    <output th:type="text" th:field="*{email}" id="email"></output>
-    <br/>
-    <label for="name">Age: </label>
-    <output th:type="text" th:field="*{age}" id="age"></output>
-    <br/>
+    <p th:text="'Name: ' + ${user.getName()}"></p>
+    <p th:text="'Surname: ' + ${user.getSurname()}"></p>
+    <p th:text="'Age: ' + ${user.getAge()}"></p>
+    <p th:text="'Email: ' + ${user.getEmail()}"></p>
     <input type="submit" value="logout"/>
     <br/>
 </form>
-<form th:method="GET" th:action="@{/admin}">
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <input type="submit" value="Back to users list"/>
-    </div>
+
+<form sec:authorize="hasRole('ROLE_ADMIN')" th:method="GET" th:action="@{/admin/}">
+    <input sec:authorize="hasRole('ROLE_ADMIN')" type="submit" value="Back to users list"/>
 </form>
 
 

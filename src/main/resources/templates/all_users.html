@@ -15,7 +15,12 @@
     </style>
 </head>
 <body>
-
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="logout"/>
+</form>
+<form th:method="GET" th:action="@{/user/}">
+    <input type="submit" value="My user info"/>
+</form>
 <table>
     <thead>
     <th>Name</th>

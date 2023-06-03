@@ -40,23 +40,26 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void addUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()) == null) {
-            return;
-        }
-        user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public void editUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void editUser(User user, String newPass) {
+        if (!(newPass.isEmpty())) {
+            user.setPassword(passwordEncoder.encode(newPass));
+        }
         userRepository.save(user);
     }
 
     @Override
     public User getUserById(long id) {
         return userRepository.getUserById(id);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
