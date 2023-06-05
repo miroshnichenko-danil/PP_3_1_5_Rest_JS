@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -15,6 +14,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getRoleByName(String name) {
-        return roleRepository.findRoleByName(name);
+        if (roleRepository.findRoleByName(name) != null) {
+            return roleRepository.findRoleByName(name);
+        }
+        Role role = roleRepository.save(new Role(name));
+        return role;
     }
 }
