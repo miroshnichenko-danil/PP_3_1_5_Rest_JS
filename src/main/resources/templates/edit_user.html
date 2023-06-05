@@ -32,8 +32,9 @@
     <label for="new_pass">Change password: </label>
     <input type="password" name="new_pass" id="new_pass"/>
     <br/>
-    <input type="checkbox" name="checkbox">
-    <label for="name">Admin </label>
+    <div th:each="role: ${rolesList}">
+        <input type="checkbox" th:field="*{roles}" th:value="${role.getId()}" th:text="${role.getName()}">
+    </div>
     <br/>
     <input type="submit" value="Edit User"/>
 </form>

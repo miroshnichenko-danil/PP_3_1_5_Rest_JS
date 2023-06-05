@@ -20,20 +20,21 @@
     <label for="name">Name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
-    <label for="name">Surname: </label>
+    <label for="surname">Surname: </label>
     <input type="text" th:field="*{surname}" id="surname"/>
     <br/>
-    <label for="name">Age: </label>
+    <label for="age">Age: </label>
     <input type="text" th:field="*{age}" id="age"/>
     <br/>
-    <label for="name">Email: </label>
+    <label for="email">Email: </label>
     <input type="text" th:field="*{email}" id="email"/>
     <br/>
-    <label for="name">Password: </label>
+    <label for="password">Password: </label>
     <input type="password" th:field="*{password}" id="password"/>
     <br/>
-    <input type="checkbox" name="checkbox">
-    <label for="name">Admin </label>
+    <div th:each="role: ${rolesList}">
+        <input type="checkbox" th:field="*{roles}" th:value="${role.getId()}" th:text="${role.getName()}">
+    </div>
     <br/>
     <input type="submit" value="Add New User"/>
 </form>
