@@ -17,8 +17,8 @@ public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
 
-    public AdminController(UserService service, RoleService roleService) {
-        this.userService = service;
+    public AdminController(UserService userService, RoleService roleService) {
+        this.userService = userService;
         this.roleService = roleService;
     }
 
@@ -29,19 +29,13 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
         return "new_user";
     }
 
     @PostMapping("/")
-    public String addUser(@ModelAttribute("user") User user
-            , @RequestParam(defaultValue = "false") boolean checkbox) {
-        Set<Role> roles = new HashSet<>();
-        if (checkbox) {
-            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        }
-        roles.add(roleService.getRoleByName("ROLE_USER"));
-        user.setRoles(roles);
+    public String addUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/admin/";
     }
@@ -49,19 +43,13 @@ public class AdminController {
     @GetMapping("/{id}/edit")
     public String editUser(Model model, @PathVariable("id") long id) {
         model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("rolesList", roleService.getAllRoles());
         return "edit_user";
     }
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user
-            , @RequestParam(value = "new_pass") String newPass
-            , @RequestParam(defaultValue = "false") boolean checkbox) {
-        Set<Role> roles = new HashSet<>();
-        if (checkbox) {
-            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        }
-        roles.add(roleService.getRoleByName("ROLE_USER"));
-        user.setRoles(roles);
+            , @RequestParam(value = "new_pass") String newPass) {
         userService.editUser(user, newPass);
         return "redirect:/admin/";
     }
