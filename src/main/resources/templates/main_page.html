@@ -117,11 +117,11 @@
                                 <!--Edit user btn in table-->
                                 <td>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#edit-user-modal">
+                                            th:data-bs-target="'#' + ${user.getId()} + 'edit-user-modal'">
                                         Edit user
                                     </button>
                                     <!--Edit user modal-->
-                                    <div class="modal fade" id="edit-user-modal" tabindex="-1"
+                                    <div class="modal fade" th:id="${user.getId()} + 'edit-user-modal'" tabindex="-1"
                                          aria-labelledby="edit-user-modal-label" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -133,7 +133,7 @@
                                                 <div class="modal-body">
                                                     <div class="container d-flex align-items-center justify-content-center">
                                                         <form id="edit-user-form" class="d-flex flex-column justify-content-center"
-                                                              th:method="PATCH" th:action="@{/main/}">
+                                                              th:method="PATCH" th:action="@{/main/}" th:object="${user}">
                                                             <label class="form-label fw-bold align-self-center"
                                                                    for="edit-name">Name: </label>
                                                             <input class="form-control" type="text" th:field="${user.getName()}"
