@@ -30,32 +30,14 @@ public class AdminController {
         return "main_page";
     }
 
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("rolesList", roleService.getAllRoles());
-        return "new_user";
-    }
-
     @PostMapping("/")
     public String addUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/main/";
     }
 
-    @GetMapping("/{id}/edit")
-    public String editUser(Model model, @PathVariable("id") long id) {
-        model.addAttribute("user", userService.getUserById(id));
-        model.addAttribute("rolesList", roleService.getAllRoles());
-        return "edit_user";
-    }
-
     @PatchMapping("/")
     public String updateUser(@ModelAttribute("user") User user) {
-        System.out.println(user.getPassword());
-        System.out.println(user.getAge());
-        System.out.println(user.getId());
-        System.out.println(user.getEmail());
-        System.out.println(user.getSurname());
         userService.editUser(user);
         return "redirect:/main/";
     }
