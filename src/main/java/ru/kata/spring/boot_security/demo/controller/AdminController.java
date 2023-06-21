@@ -49,10 +49,14 @@ public class AdminController {
         return "edit_user";
     }
 
-    @PatchMapping("/main/")
-    public String updateUser(@ModelAttribute("user") User user
-            , @RequestParam(value = "new_pass") String newPass) {
-        userService.editUser(user, newPass);
+    @PatchMapping("/")
+    public String updateUser(@ModelAttribute("user") User user) {
+        System.out.println(user.getPassword());
+        System.out.println(user.getAge());
+        System.out.println(user.getId());
+        System.out.println(user.getEmail());
+        System.out.println(user.getSurname());
+        userService.editUser(user);
         return "redirect:/main/";
     }
 

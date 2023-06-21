@@ -114,15 +114,21 @@
                                         <span th:text="${userRole.getName().substring(5).toLowerCase()}"></span>
                                     </th:block>
                                 </td>
-                                <!--Edit user btn in table-->
                                 <td>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            th:data-bs-target="'#' + ${user.getId()} + 'edit-user-modal'">
+                                    <!--Edit user btn in table-->
+                                    <button class="btn btn-info"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            th:data-bs-target="${'#edit-user-modal' + user.getId()}"
+                                            th:data-row="${user}">
                                         Edit user
                                     </button>
                                     <!--Edit user modal-->
-                                    <div class="modal fade" th:id="${user.getId()} + 'edit-user-modal'" tabindex="-1"
-                                         aria-labelledby="edit-user-modal-label" aria-hidden="true">
+                                    <div class="modal fade"
+                                         th:id="${'edit-user-modal' + user.getId()} "
+                                         tabindex="-1"
+                                         aria-labelledby="edit-user-modal-label"
+                                         aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -132,56 +138,66 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="container d-flex align-items-center justify-content-center">
-                                                        <form id="edit-user-form" class="d-flex flex-column justify-content-center"
-                                                              th:method="PATCH" th:action="@{/main/}" th:object="${user}">
-                                                            <label class="form-label fw-bold align-self-center"
-                                                                   for="edit-name">Name: </label>
-                                                            <input class="form-control" type="text" th:field="${user.getName()}"
-                                                                   id="edit-name"/>
-                                                            <label class="form-label fw-bold align-self-center"
-                                                                   for="edit-surname">Surname: </label>
-                                                            <input class="form-control" type="text"
-                                                                   th:field="${user.surname}" id="edit-surname"/>
-                                                            <label class="form-label fw-bold align-self-center"
-                                                                   for="edit-age">Age: </label>
-                                                            <input class="form-control" type="text" th:field="${user.age}"
-                                                                   id="edit-age"/>
-                                                            <label class="form-label fw-bold align-self-center"
-                                                                   for="edit-email">Email: </label>
-                                                            <input class="form-control" type="text" th:field="${user.email}"
-                                                                   id="edit-email"/>
-                                                            <label class="form-label fw-bold align-self-center"
-                                                                   for="edit-password">Password: </label>
-                                                            <input class="form-control" type="password"
-                                                                   th:field="${user.password}" id="edit-password"/>
+                                                        <form class="d-flex flex-column justify-content-center"
+                                                              th:method="PATCH" th:action="@{/main/}"
+                                                              th:object="${user}"
+                                                              th:id="${'form' + user.getId()}">
+
+                                                            <label class="form-label fw-bold align-self-center">ID: </label>
+                                                            <input class="form-control"
+                                                                   type="text"
+                                                                   th:value="${user.id}" readonly/>
+                                                            <label class="form-label fw-bold align-self-center">Name: </label>
+                                                            <input class="form-control"
+                                                                   type="text"
+                                                                   th:value="${user.name}"/>
+                                                            <label class="form-label fw-bold align-self-center">Surname: </label>
+                                                            <input class="form-control"
+                                                                   type="text"
+                                                                   th:value="${user.surname}"/>
+                                                            <label class="form-label fw-bold align-self-center">Age: </label>
+                                                            <input class="form-control"
+                                                                   type="number"
+                                                                   th:value="${user.age}"/>
+                                                            <label class="form-label fw-bold align-self-center">Email: </label>
+                                                            <input class="form-control"
+                                                                   type="email"
+                                                                   th:value="${user.email}"/>
+                                                            <label class="form-label fw-bold align-self-center">Change password: </label>
+                                                            <input class="form-control"
+                                                                   type="password"
+                                                                   th:value="${user.password}"/>
                                                             <label class="form-label fw-bold align-self-center">Role:</label>
                                                             <select class="form-select form-select-sm"
-                                                                    aria-label="form-select" th:field="${user.roles}">
+                                                                    aria-label="form-select"
+                                                                    th:value="${user.roles}">
                                                                 <th:block th:each="role: ${rolesList}">
-                                                                    <option th:field="*{user.roles}"
+                                                                    <option
                                                                             th:value="${role.getId()}"
                                                                             th:text="${role.getName()}"></option>
                                                                 </th:block>
                                                             </select>
-                                                            <br/>
-
                                                         </form>
                                                     </div>
                                                 </div>
+
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close
+                                                            data-bs-dismiss="modal">
+                                                        Close
                                                     </button>
-                                                    <input class="btn btn-success" type="submit"
-                                                           value="Edit" form="edit-user-form"/>
+                                                    <button type="submit" class="btn btn-primary"
+                                                            th:form="${'form' + user.getId()}">
+                                                        Edit
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                 </td>
-                                <!--Delete user btn-->
                                 <td>
+                                    <!--Delete user btn-->
                                     <form th:method="DELETE" th:action="@{${user.getId()}}" th:object="${user}">
                                         <input class="btn btn-danger" type="submit" value="Delete User"/>
                                     </form>
@@ -199,14 +215,17 @@
                                   th:object="${newUser}">
                                 <label class="form-label fw-bold align-self-center" for="new-user-name">Name: </label>
                                 <input class="form-control" type="text" th:field="*{name}" id="new-user-name"/>
-                                <label class="form-label fw-bold align-self-center" for="new-user-surname">Surname: </label>
+                                <label class="form-label fw-bold align-self-center"
+                                       for="new-user-surname">Surname: </label>
                                 <input class="form-control" type="text" th:field="*{surname}" id="new-user-surname"/>
                                 <label class="form-label fw-bold align-self-center" for="new-user-age">Age: </label>
                                 <input class="form-control" type="text" th:field="*{age}" id="new-user-age"/>
                                 <label class="form-label fw-bold align-self-center" for="new-user-email">Email: </label>
                                 <input class="form-control" type="text" th:field="*{email}" id="new-user-email"/>
-                                <label class="form-label fw-bold align-self-center" for="new-user-password">Password: </label>
-                                <input class="form-control" type="password" th:field="*{password}" id="new-user-password"/>
+                                <label class="form-label fw-bold align-self-center"
+                                       for="new-user-password">Password: </label>
+                                <input class="form-control" type="password" th:field="*{password}"
+                                       id="new-user-password"/>
                                 <label class="form-label fw-bold align-self-center">Role:</label>
                                 <select class="form-select form-select-sm" aria-label="form-select" th:field="*{roles}">
                                     <th:block th:each="role: ${rolesList}">
