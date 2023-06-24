@@ -38,7 +38,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        if (userRepository.findByEmail(user.getEmail()) == null) {
+            userRepository.save(user);
+        }
     }
 
     @Override
