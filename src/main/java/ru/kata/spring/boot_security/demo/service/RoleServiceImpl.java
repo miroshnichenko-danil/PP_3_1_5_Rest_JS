@@ -21,6 +21,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findRoleByName(String name) {
-        return roleRepository.findRoleByName(name);
+        if (roleRepository.findRoleByName(name) != null) {
+            return roleRepository.findRoleByName(name);
+        }
+        Role newRole = new Role(name);
+        roleRepository.save(newRole);
+        return newRole;
     }
 }

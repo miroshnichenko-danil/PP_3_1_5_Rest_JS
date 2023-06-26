@@ -27,8 +27,8 @@ public class DbInit {
         Role userRole = roleService.findRoleByName("ROLE_USER");
         Set<Role> userRoles = new HashSet<>();
         Set<Role> adminRoles = new HashSet<>();
-        userRoles.add(adminRole);
-        adminRoles.add(userRole);
+        userRoles.add(userRole);
+        adminRoles.add(adminRole);
         User user = new User("user", "user", "user@user.ru", 3, userRoles, "user");
         User admin = new User("admin1", "admin1", "admin@admin.ru", 2, adminRoles, "admin");
         userService.addUser(user);
