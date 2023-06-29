@@ -150,7 +150,7 @@
                                                     <div class="modal-body">
                                                         <div class="container d-flex align-items-center justify-content-center">
                                                             <form class="d-flex flex-column justify-content-center"
-                                                                  th:method="PATCH" th:action="@{/main/}"
+                                                                  th:method="PATCH" th:action="@{/admin/}"
                                                                   th:object="${user}"
                                                                   th:id="${'form_edit' + user.getId()}">
 
@@ -188,7 +188,7 @@
                                                                 <label class="form-label fw-bold align-self-center">Role:</label>
                                                                 <select class="form-select form-select-sm"
                                                                         th:name="roles"
-                                                                        aria-label="form-select"
+                                                                        multiple aria-label="form-select"
                                                                         th:value="${user.roles}">
                                                                     <th:block th:each="role: ${rolesList}">
                                                                         <option
@@ -240,7 +240,7 @@
                                                         <div class="container d-flex align-items-center justify-content-center">
                                                             <form class="d-flex flex-column justify-content-center"
                                                                   th:method="DELETE"
-                                                                  th:action="@{/main/{id}(id=${user.getId()})}"
+                                                                  th:action="@{/admin/{id}(id=${user.getId()})}"
                                                                   th:object="${user}"
                                                                   th:id="${'form_delete' + user.getId()}">
 
@@ -313,7 +313,7 @@
                             <h4>Add new user</h4>
                             <div class="container d-flex align-items-center justify-content-center">
                                 <form class="d-flex flex-column justify-content-center" th:method="POST"
-                                      th:action="@{/main/}"
+                                      th:action="@{/admin/}"
                                       th:object="${newUser}">
                                     <label class="form-label fw-bold align-self-center"
                                            for="new-user-name">Name: </label>
