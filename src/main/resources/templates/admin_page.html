@@ -38,20 +38,28 @@
              id="list-tab"
              role="tablist"
              aria-orientation="vertical">
-            <th:block th:each="role: ${curUser.getRoles()}">
-                <a class="nav-link"
-                   data-bs-toggle="pill"
-                   th:href="${'#'+ role.getName()} + '-panel'"
-                   role="tab"
-                   th:aria-controls="${role.getName()} + '-panel'"
-                   aria-selected="false"
-                   th:text="${role.getName().substring(5).toLowerCase()}">
-                </a>
-                <div class="tab-content" id="v-pills-tab-content">
-                    <div class="tab-pane fade show active" th:id="'v-pills' + ${role.getName()}" role="tabpanel"
-                         th:aria-labelledby="'v-pills-' + ${role.getName()} + '-tab'"></div>
-                </div>
-            </th:block>
+
+            <!--Admin page button-->
+            <a class="nav-link active"
+               data-bs-toggle="pill"
+               href="#ROLE_ADMIN-panel"
+               role="tab"
+               aria-controls="ROLE_ADMIN-panel"
+               aria-selected="true">
+                admin
+            </a>
+
+            <!--User page button-->
+            <a class="nav-link"
+               sec:authorize="hasRole('ROLE_USER')"
+               data-bs-toggle="pill"
+               href="#ROLE_USER-panel"
+               role="tab"
+               aria-controls="ROLE_ADMIN-panel"
+               aria-selected="false">
+                user
+            </a>
+
         </div>
     </div>
 
@@ -59,7 +67,7 @@
     <div class="container col-10 bg-light">
         <div class="tab-content">
             <!--Admin page-->
-            <div class="tab-pane fade" id="ROLE_ADMIN-panel" role="tabpanel">
+            <div class="tab-pane fade show active" id="ROLE_ADMIN-panel" role="tabpanel">
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
                     <h2>Admin Panel</h2>
                     <ul class="nav nav-tabs" role="tablist">

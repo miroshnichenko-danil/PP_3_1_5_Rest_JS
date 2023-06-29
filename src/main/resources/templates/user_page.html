@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <style>
+        * {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!--Current user info and logout-->
+<div class="container-fluid bg-dark">
+    <form class="d-flex justify-content-between" th:method="POST" th:action="@{/logout}" th:object="${curUser}">
+        <div style="color:white">
+            <output th:text="${curUser.getEmail()}"/>
+            <output>with roles:</output>
+            <div style="display: inline-block" th:each="role : ${curUser.getRoles()}">
+                <output th:text="${role.getName().substring(5).toLowerCase()}"/>
+            </div>
+        </div>
+        <input class="btn-dark" style="color:white; border: none " type="submit" value="logout"/>
+    </form>
+</div>
+
+<div class="d-flex flex-row align-items-stretch">
+    <!--Left NavBar-->
+    <div class="col-2">
+        <div class="nav flex-column nav-pills"
+             id="list-tab"
+             role="tablist"
+             aria-orientation="vertical">
+            <!--User page button-->
+            <a class="nav-link active"
+               sec:authorize="hasRole('ROLE_USER')"
+               data-bs-toggle="pill"
+               href="#ROLE_USER-panel"
+               role="tab"
+               aria-controls="ROLE_ADMIN-panel"
+               aria-selected="true">
+                user
+            </a>
+        </div>
+    </div>
+
+    <!--Main body-->
+    <div class="container col-10 bg-light">
+        <div class="tab-content">
+            <!--User page-->
+            <div class="tab-pane fade show active" id="ROLE_USER-panel" role="tabpanel">
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <h2>User information-page</h2>
+                    <div class="container border">
+                        <h4>About user</h4>
+                        <table class="table table-striped">
+                            <thead>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th>Role</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${curUser.getId()}"></td>
+                                <td th:text="${curUser.getName()}"></td>
+                                <td th:text="${curUser.getSurname()}"></td>
+                                <td th:text="${curUser.getEmail()}"></td>
+                                <td th:text="${curUser.getAge()}"></td>
+                                <td>
+                                    <th:block th:each="userRole: ${curUser.getRoles()}">
+                                        <span th:text="${userRole.getName().substring(5).toLowerCase()}"></span>
+                                    </th:block>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -22,7 +22,7 @@ public class UserController {
     public String showUserInfo(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getUserByEmail(auth.getName());
-        model.addAttribute("user", user);
-        return "user";
+        model.addAttribute("curUser", user);
+        return "user_page";
     }
 }
