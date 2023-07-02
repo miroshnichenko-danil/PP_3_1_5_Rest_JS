@@ -1,0 +1,14 @@
+* {
+    font-size: 20px;
+}
+header {
+    color: white;
+    padding: 5px;
+}
+header input {
+    color:white;
+    border: none;
+}
+p {
+    margin: 0;
+}

@@ -27,7 +27,7 @@ public class AdminController {
         User curUser = userService.getUserByEmail(auth.getName());
         model.addAttribute("curUser", curUser);
         model.addAttribute("rolesList", roleService.getAllRoles());
-        return "admin_page";
+        return "admin";
     }
 
     @PostMapping("/")
